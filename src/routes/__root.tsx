@@ -6,7 +6,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
-import Header from '../components/Header'
+
 
 import { TanStackQueryProvider } from '../integrations/tanstack-query/TanstackQueryProvider';
 
@@ -15,6 +15,8 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
+import Navbar from '@/components/web/navigation/Navbar';
+import { ThemeProvider } from '@/lib/theme';
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -51,24 +53,27 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <TanStackQueryProvider>
-          <Header />
-          {children}
-          <TanStackDevtools
-            config={{
-              position: 'bottom-right',
-            }}
-            plugins={[
-              {
-                name: 'Tanstack Router',
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-              TanStackQueryDevtools,
-            ]}
-          />
+        <ThemeProvider>
+          <TanStackQueryProvider>
+            <Navbar />
+            {children}
+            <TanStackDevtools
+              config={{
+                position: 'bottom-right',
+              }}
+              plugins={[
+                {
+                  name: 'Tanstack Router',
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+                TanStackQueryDevtools,
+              ]}
+            />
 
-          <Scripts />
-        </TanStackQueryProvider>
+            <Scripts />
+          </TanStackQueryProvider>
+        </ThemeProvider>
+
 
       </body>
     </html>

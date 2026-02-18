@@ -9,18 +9,78 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UsersRouteImport } from './routes/users'
+import { Route as TeachersRouteImport } from './routes/teachers'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as Old_indexRouteImport } from './routes/old_index'
+import { Route as HomeRouteImport } from './routes/home'
+import { Route as EventsRouteImport } from './routes/events'
+import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
+import { Route as AuthRegisterRouteImport } from './routes/auth/register'
+import { Route as AuthProfileRouteImport } from './routes/auth/profile'
+import { Route as AuthLogoutRouteImport } from './routes/auth/logout'
+import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as ApiSplatRouteImport } from './routes/api.$'
 
+const UsersRoute = UsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeachersRoute = TeachersRouteImport.update({
+  id: '/teachers',
+  path: '/teachers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Old_indexRoute = Old_indexRouteImport.update({
+  id: '/old_index',
+  path: '/old_index',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesRoute = CoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
+const AuthRegisterRoute = AuthRegisterRouteImport.update({
+  id: '/auth/register',
+  path: '/auth/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthProfileRoute = AuthProfileRouteImport.update({
+  id: '/auth/profile',
+  path: '/auth/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLogoutRoute = AuthLogoutRouteImport.update({
+  id: '/auth/logout',
+  path: '/auth/logout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiSplatRoute = ApiSplatRouteImport.update({
@@ -31,36 +91,165 @@ const ApiSplatRoute = ApiSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/courses': typeof CoursesRoute
+  '/events': typeof EventsRoute
+  '/home': typeof HomeRoute
+  '/old_index': typeof Old_indexRoute
+  '/profile': typeof ProfileRoute
+  '/teachers': typeof TeachersRoute
+  '/users': typeof UsersRoute
   '/api/$': typeof ApiSplatRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/logout': typeof AuthLogoutRoute
+  '/auth/profile': typeof AuthProfileRoute
+  '/auth/register': typeof AuthRegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/courses': typeof CoursesRoute
+  '/events': typeof EventsRoute
+  '/home': typeof HomeRoute
+  '/old_index': typeof Old_indexRoute
+  '/profile': typeof ProfileRoute
+  '/teachers': typeof TeachersRoute
+  '/users': typeof UsersRoute
   '/api/$': typeof ApiSplatRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/logout': typeof AuthLogoutRoute
+  '/auth/profile': typeof AuthProfileRoute
+  '/auth/register': typeof AuthRegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/courses': typeof CoursesRoute
+  '/events': typeof EventsRoute
+  '/home': typeof HomeRoute
+  '/old_index': typeof Old_indexRoute
+  '/profile': typeof ProfileRoute
+  '/teachers': typeof TeachersRoute
+  '/users': typeof UsersRoute
   '/api/$': typeof ApiSplatRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/logout': typeof AuthLogoutRoute
+  '/auth/profile': typeof AuthProfileRoute
+  '/auth/register': typeof AuthRegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/$' | '/demo/tanstack-query'
+  fullPaths:
+    | '/'
+    | '/courses'
+    | '/events'
+    | '/home'
+    | '/old_index'
+    | '/profile'
+    | '/teachers'
+    | '/users'
+    | '/api/$'
+    | '/auth/login'
+    | '/auth/logout'
+    | '/auth/profile'
+    | '/auth/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/$' | '/demo/tanstack-query'
-  id: '__root__' | '/' | '/api/$' | '/demo/tanstack-query'
+  to:
+    | '/'
+    | '/courses'
+    | '/events'
+    | '/home'
+    | '/old_index'
+    | '/profile'
+    | '/teachers'
+    | '/users'
+    | '/api/$'
+    | '/auth/login'
+    | '/auth/logout'
+    | '/auth/profile'
+    | '/auth/register'
+  id:
+    | '__root__'
+    | '/'
+    | '/courses'
+    | '/events'
+    | '/home'
+    | '/old_index'
+    | '/profile'
+    | '/teachers'
+    | '/users'
+    | '/api/$'
+    | '/auth/login'
+    | '/auth/logout'
+    | '/auth/profile'
+    | '/auth/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CoursesRoute: typeof CoursesRoute
+  EventsRoute: typeof EventsRoute
+  HomeRoute: typeof HomeRoute
+  Old_indexRoute: typeof Old_indexRoute
+  ProfileRoute: typeof ProfileRoute
+  TeachersRoute: typeof TeachersRoute
+  UsersRoute: typeof UsersRoute
   ApiSplatRoute: typeof ApiSplatRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthLogoutRoute: typeof AuthLogoutRoute
+  AuthProfileRoute: typeof AuthProfileRoute
+  AuthRegisterRoute: typeof AuthRegisterRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/users': {
+      id: '/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teachers': {
+      id: '/teachers'
+      path: '/teachers'
+      fullPath: '/teachers'
+      preLoaderRoute: typeof TeachersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/old_index': {
+      id: '/old_index'
+      path: '/old_index'
+      fullPath: '/old_index'
+      preLoaderRoute: typeof Old_indexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses': {
+      id: '/courses'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -68,11 +257,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
+    '/auth/register': {
+      id: '/auth/register'
+      path: '/auth/register'
+      fullPath: '/auth/register'
+      preLoaderRoute: typeof AuthRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/profile': {
+      id: '/auth/profile'
+      path: '/auth/profile'
+      fullPath: '/auth/profile'
+      preLoaderRoute: typeof AuthProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/logout': {
+      id: '/auth/logout'
+      path: '/auth/logout'
+      fullPath: '/auth/logout'
+      preLoaderRoute: typeof AuthLogoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/$': {
@@ -87,8 +297,18 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CoursesRoute: CoursesRoute,
+  EventsRoute: EventsRoute,
+  HomeRoute: HomeRoute,
+  Old_indexRoute: Old_indexRoute,
+  ProfileRoute: ProfileRoute,
+  TeachersRoute: TeachersRoute,
+  UsersRoute: UsersRoute,
   ApiSplatRoute: ApiSplatRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthLogoutRoute: AuthLogoutRoute,
+  AuthProfileRoute: AuthProfileRoute,
+  AuthRegisterRoute: AuthRegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
