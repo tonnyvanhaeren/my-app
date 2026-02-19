@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-
+import { Toaster } from 'sonner'
 
 
 import { TanStackQueryProvider } from '../integrations/tanstack-query/TanstackQueryProvider';
@@ -15,7 +15,7 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
-import Navbar from '@/components/web/navigation/Navbar';
+import { MainNavbar } from '@/components/web/navigation/Main-Navbar';
 import { ThemeProvider } from '@/lib/theme';
 
 interface MyRouterContext {
@@ -52,11 +52,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className=''>
         <ThemeProvider>
           <TanStackQueryProvider>
-            <Navbar />
+            <MainNavbar />
             {children}
+            <Toaster />
             <TanStackDevtools
               config={{
                 position: 'bottom-right',

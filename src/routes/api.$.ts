@@ -3,7 +3,7 @@ import { treaty } from '@elysiajs/eden'
 import { createFileRoute } from '@tanstack/react-router'
 import { createIsomorphicFn } from '@tanstack/react-start'
 
-import { createBaseApp } from '../api/server/app'
+import { createBaseApp, type App } from '../api/server/app'
 
 const app = createBaseApp()
 
@@ -21,10 +21,14 @@ export const Route = createFileRoute('/api/$')({
   },
 })
 
+// Eden infers treaty shape from App['~Routes']. Composition via .use(register*)
+// loses that inference, so we assert the app has the 'api' prefix shape.
+type AppWithApiPrefix = App & { '~Routes': { api: Record<string, unknown> } }
+
 export const getTreaty = createIsomorphicFn()
-  .server(() => treaty(app).api)
+  .server(() => treaty<AppWithApiPrefix>(app as AppWithApiPrefix).api)
   .client(() => {
     const origin =
       typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
-    return treaty<typeof app>(origin).api
+    return treaty<AppWithApiPrefix>(origin).api
   })

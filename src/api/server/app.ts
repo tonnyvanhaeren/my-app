@@ -59,3 +59,5 @@ export function createBaseApp() {
 
   return app;
 }
+
+export type App = ReturnType<typeof createBaseApp>;

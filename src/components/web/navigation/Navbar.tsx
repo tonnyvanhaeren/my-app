@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useMatchRoute } from '@tanstack/react-router';
+import { ModeToggle } from './mode-toggle';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const matchRoute = useMatchRoute();
 
   const navItems = [
-    { name: 'Home', path: '/' },
+    { name: 'Home', path: '/home' },
     { name: 'Users', path: '/users' },
     { name: 'Teachers', path: '/teachers' },
     { name: 'Courses', path: '/courses' },
@@ -21,7 +22,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-orange-500 shadow-lg">
+    <nav className="bg-orange-400 shadow-lg">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between">
           <div className="flex space-x-7">
@@ -46,6 +47,7 @@ const Navbar = () => {
           </div>
           {/* Secondary Nav */}
           <div className="hidden md:flex items-center space-x-3">
+            <ModeToggle />
             {authItems.map((item) => (
               <Link
                 key={item.name}
