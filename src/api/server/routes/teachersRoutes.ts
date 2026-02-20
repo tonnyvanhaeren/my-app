@@ -1,6 +1,6 @@
 import Elysia from "elysia"
 
-export function registerTeacherRoutes(app: Elysia<'api'>) {
+export function registerTeacherRoutes(app: Elysia<'/api'>) {
   app.group('/teachers', app =>
     app.get('/', ({ requireRole, userId, role }) => {
       requireRole('teacher')

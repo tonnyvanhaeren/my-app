@@ -11,7 +11,7 @@ import { formatDate } from './utils/globalUtils';
 
 
 export function createBaseApp() {
-  const app: Elysia<'api'> = new Elysia({ prefix: 'api' });
+  const app: Elysia<'/api'> = new Elysia({ prefix: '/api' });
 
   app.onBeforeHandle(({ store, request }) => {
     // starttijd opslaan

@@ -7,7 +7,7 @@ import { defaultErrorSchema } from '../errorClasses/errors';
 
 const userService = await UserService.getInstance();
 
-export function registerUserRoutes(app: Elysia<'api'>) {
+export function registerUserRoutes(app: Elysia<'/api'>) {
   app.group('/users', app =>
     app
       .get('/me', async ({ userId }) => {

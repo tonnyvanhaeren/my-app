@@ -3,7 +3,7 @@ import { treaty } from '@elysiajs/eden'
 import { createFileRoute } from '@tanstack/react-router'
 import { createIsomorphicFn } from '@tanstack/react-start'
 
-import { createBaseApp, type App } from '../api/server/app'
+import { createBaseApp, App } from '../api/server/app'
 
 const app = createBaseApp()
 
@@ -32,3 +32,11 @@ export const getTreaty = createIsomorphicFn()
       typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
     return treaty<AppWithApiPrefix>(origin).api
   })
+
+// export const getTreaty = createIsomorphicFn()
+//   .server(() => treaty(app))
+//   .client(() => {
+//     const origin =
+//       typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
+//     return treaty(origin)
+//   })

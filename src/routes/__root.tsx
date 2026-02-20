@@ -16,6 +16,7 @@ import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
 import { MainNavbar } from '@/components/web/navigation/Main-Navbar';
+import { NotFound } from '@/components/web/NotFound';
 import { ThemeProvider } from '@/lib/theme';
 
 interface MyRouterContext {
@@ -44,6 +45,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
   }),
   shellComponent: RootDocument,
+  notFoundComponent: NotFound,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
