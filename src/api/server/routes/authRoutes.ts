@@ -8,8 +8,8 @@ import { singleUserResponseSchema } from '../endpointSchemas/userSchemas';
 
 const authService = await AuthService.getInstance();
 
-export function registerAuthRoutes(app: Elysia<'/api'>) {
-  app.group('/auth', app =>
+export const registerAuthRoutes = new Elysia()
+  .group('/auth', app =>
     app
       .post('/login', async ({ body, cookie: { access, refresh } }) => {
         const user = await authService.login(body)
@@ -130,7 +130,4 @@ export function registerAuthRoutes(app: Elysia<'/api'>) {
         detail: { tags: ["Auth"] },
       })
   )
-
-  return app;
-}
 

@@ -1,15 +1,18 @@
+import { createFileRoute } from '@tanstack/react-router'
 // src/routes/api.$.ts
 import { treaty } from '@elysiajs/eden'
-import { createFileRoute } from '@tanstack/react-router'
-import { createIsomorphicFn } from '@tanstack/react-start'
+// import { createFileRoute } from '@tanstack/react-router'
 
-import { createBaseApp, App } from '../api/server/app'
 
-const app = createBaseApp()
+import type { App } from '../api/server/app'
+import { app } from '../api/server/app'
+
+
 
 const handle = ({ request }: { request: Request }) => app.fetch(request)
 
 export const Route = createFileRoute('/api/$')({
+
   server: {
     handlers: {
       GET: handle,
@@ -19,24 +22,24 @@ export const Route = createFileRoute('/api/$')({
       DELETE: handle,
     },
   },
-})
+});
 
-// Eden infers treaty shape from App['~Routes']. Composition via .use(register*)
-// loses that inference, so we assert the app has the 'api' prefix shape.
-type AppWithApiPrefix = App & { '~Routes': { api: Record<string, unknown> } }
 
-export const getTreaty = createIsomorphicFn()
-  .server(() => treaty<AppWithApiPrefix>(app as AppWithApiPrefix).api)
-  .client(() => {
-    const origin =
-      typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
-    return treaty<AppWithApiPrefix>(origin).api
-  })
+export const api = treaty<App>('http://localhost:3000')
 
 // export const getTreaty = createIsomorphicFn()
-//   .server(() => treaty(app))
+//   .server(() => treaty(app).api)
+//   .client(() => treaty<typeof app>('localhost:3000').api)
+
+// export const getTreaty = createIsomorphicFn()
+//   .server(() => treaty(app))                  // geen .api
+//   .client(() => treaty<typeof app>('/api'))   // baseUrl = /api
+
+
+// export const getTreaty = createIsomorphicFn()
+//   .server(() => treaty(app).api)
 //   .client(() => {
 //     const origin =
 //       typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
-//     return treaty(origin)
+//     return treaty(origin).api
 //   })

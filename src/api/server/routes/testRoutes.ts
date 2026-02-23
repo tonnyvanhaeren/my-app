@@ -1,8 +1,7 @@
-import type { BaseApp } from '../app'
-import { t } from 'elysia'
+import { t, Elysia } from 'elysia'
 
-export const testRoutes = <T extends BaseApp>(app: T) =>
-  app.group('/test', app =>
+export const registerTestRoutes = new Elysia()
+  .group('/test', app =>
     app
       .get('/public', ({ }) => {
         return { ok: true }

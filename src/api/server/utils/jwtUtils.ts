@@ -17,6 +17,12 @@ interface MyPayload extends JWTPayload {
   role: Role; // your custom claim
 }
 
+export type UserPayload = {
+  email: string;
+  userId: string;
+  role: Role; // your custom claim
+}
+
 // Functies om een access en refresh JWT te genereren
 export async function signAccessToken(payload: { sub: string, email: string, role: string }) {
 
@@ -62,7 +68,7 @@ export async function verifyRefreshToken(refreshToken: string) {
     const { payload } = await jwtVerify(refreshToken, JWT_SECRET_REFRESH, {
       algorithms: ['HS256']
     });
-    const user = payload as { sub: string, exp: number }
+    // const user = payload as { sub: string, exp: number }
 
     return payload;
 

@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UsersRouteImport } from './routes/users'
 import { Route as TeachersRouteImport } from './routes/teachers'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as Old_indexRouteImport } from './routes/old_index'
@@ -17,17 +16,13 @@ import { Route as HomeRouteImport } from './routes/home'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UsersIndexRouteImport } from './routes/users/index'
 import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthProfileRouteImport } from './routes/auth/profile'
 import { Route as AuthLogoutRouteImport } from './routes/auth/logout'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as ApiSplatRouteImport } from './routes/api.$'
 
-const UsersRoute = UsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const TeachersRoute = TeachersRouteImport.update({
   id: '/teachers',
   path: '/teachers',
@@ -61,6 +56,11 @@ const CoursesRoute = CoursesRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UsersIndexRoute = UsersIndexRouteImport.update({
+  id: '/users/',
+  path: '/users/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
@@ -97,12 +97,12 @@ export interface FileRoutesByFullPath {
   '/old_index': typeof Old_indexRoute
   '/profile': typeof ProfileRoute
   '/teachers': typeof TeachersRoute
-  '/users': typeof UsersRoute
   '/api/$': typeof ApiSplatRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/logout': typeof AuthLogoutRoute
   '/auth/profile': typeof AuthProfileRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/users/': typeof UsersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -112,12 +112,12 @@ export interface FileRoutesByTo {
   '/old_index': typeof Old_indexRoute
   '/profile': typeof ProfileRoute
   '/teachers': typeof TeachersRoute
-  '/users': typeof UsersRoute
   '/api/$': typeof ApiSplatRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/logout': typeof AuthLogoutRoute
   '/auth/profile': typeof AuthProfileRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/users': typeof UsersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -128,12 +128,12 @@ export interface FileRoutesById {
   '/old_index': typeof Old_indexRoute
   '/profile': typeof ProfileRoute
   '/teachers': typeof TeachersRoute
-  '/users': typeof UsersRoute
   '/api/$': typeof ApiSplatRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/logout': typeof AuthLogoutRoute
   '/auth/profile': typeof AuthProfileRoute
   '/auth/register': typeof AuthRegisterRoute
+  '/users/': typeof UsersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -145,12 +145,12 @@ export interface FileRouteTypes {
     | '/old_index'
     | '/profile'
     | '/teachers'
-    | '/users'
     | '/api/$'
     | '/auth/login'
     | '/auth/logout'
     | '/auth/profile'
     | '/auth/register'
+    | '/users/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -160,12 +160,12 @@ export interface FileRouteTypes {
     | '/old_index'
     | '/profile'
     | '/teachers'
-    | '/users'
     | '/api/$'
     | '/auth/login'
     | '/auth/logout'
     | '/auth/profile'
     | '/auth/register'
+    | '/users'
   id:
     | '__root__'
     | '/'
@@ -175,12 +175,12 @@ export interface FileRouteTypes {
     | '/old_index'
     | '/profile'
     | '/teachers'
-    | '/users'
     | '/api/$'
     | '/auth/login'
     | '/auth/logout'
     | '/auth/profile'
     | '/auth/register'
+    | '/users/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -191,23 +191,16 @@ export interface RootRouteChildren {
   Old_indexRoute: typeof Old_indexRoute
   ProfileRoute: typeof ProfileRoute
   TeachersRoute: typeof TeachersRoute
-  UsersRoute: typeof UsersRoute
   ApiSplatRoute: typeof ApiSplatRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthLogoutRoute: typeof AuthLogoutRoute
   AuthProfileRoute: typeof AuthProfileRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
+  UsersIndexRoute: typeof UsersIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/users': {
-      id: '/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof UsersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/teachers': {
       id: '/teachers'
       path: '/teachers'
@@ -257,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/users/': {
+      id: '/users/'
+      path: '/users'
+      fullPath: '/users/'
+      preLoaderRoute: typeof UsersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/register': {
       id: '/auth/register'
       path: '/auth/register'
@@ -303,12 +303,12 @@ const rootRouteChildren: RootRouteChildren = {
   Old_indexRoute: Old_indexRoute,
   ProfileRoute: ProfileRoute,
   TeachersRoute: TeachersRoute,
-  UsersRoute: UsersRoute,
   ApiSplatRoute: ApiSplatRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthLogoutRoute: AuthLogoutRoute,
   AuthProfileRoute: AuthProfileRoute,
   AuthRegisterRoute: AuthRegisterRoute,
+  UsersIndexRoute: UsersIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

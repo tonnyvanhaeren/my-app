@@ -18,7 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getTreaty } from "@/routes/api.$";
+import { api } from "@/routes/api.$";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -56,8 +56,8 @@ export function RegisterForm() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      const api = getTreaty();
-      const response = await api.auth.register.post(data);
+
+      const response = await api.api.auth.register.post(data);
 
       if (response.error) {
         toast.error(response.error.value.error.message || "Registratie mislukt.");

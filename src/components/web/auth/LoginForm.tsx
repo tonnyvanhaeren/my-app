@@ -18,7 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getTreaty } from "@/routes/api.$";
+import { api } from "@/routes/api.$";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -44,8 +44,8 @@ export function LoginForm() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      const api = getTreaty();
-      const response = await api.auth.login.post(data);
+
+      const response = await api.api.auth.login.post(data);
 
       if (response.error) {
         toast.error(response.error.value.error.message || "Ongeldige email of wachtwoord.");
