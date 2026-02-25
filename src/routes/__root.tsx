@@ -14,16 +14,40 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import appCss from '../styles.css?url'
 
-import type { QueryClient } from '@tanstack/react-query'
+
 import { MainNavbar } from '@/components/web/navigation/Main-Navbar';
 import { NotFound } from '@/components/web/NotFound';
 import { ThemeProvider } from '@/lib/theme';
+import { fetchCurrentuser } from '@/server/auth';
+import { AuthProvider, User } from '@/server/AuthContext';
 
-interface MyRouterContext {
-  queryClient: QueryClient
+
+// export interface MyRouterContext {
+//   queryClient: QueryClient
+//   auth: {
+//     isAuthenticated: boolean;
+//     user: {
+//       sub: string;
+//       email: string;
+//       role: string;
+//     } | null;
+//   };
+// }
+
+export type RouterContext = {
+  user: User | null
 }
 
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = createRootRouteWithContext<RouterContext>()({
+  beforeLoad: async ({ }) => {
+    // const auth = await getSessionFromCookie();
+    const user = await fetchCurrentuser();
+    console.log('Result : ', user);
+    //console.log('ALL-', all)
+
+    return { user } as RouterContext
+  },
+
   head: () => ({
     meta: [
       {
@@ -46,9 +70,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   }),
   shellComponent: RootDocument,
   notFoundComponent: NotFound,
+
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { user } = Route.useRouteContext()
   return (
     <html lang="en">
       <head>
@@ -56,25 +82,28 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className=''>
         <ThemeProvider>
-          <TanStackQueryProvider>
-            <MainNavbar />
-            {children}
-            <Toaster />
-            <TanStackDevtools
-              config={{
-                position: 'bottom-right',
-              }}
-              plugins={[
-                {
-                  name: 'Tanstack Router',
-                  render: <TanStackRouterDevtoolsPanel />,
-                },
-                TanStackQueryDevtools,
-              ]}
-            />
+          <AuthProvider initialUser={user}>
+            <TanStackQueryProvider>
+              <MainNavbar />
+              {children}
+              <Toaster />
+              <TanStackDevtools
+                config={{
+                  position: 'bottom-right',
+                }}
+                plugins={[
+                  {
+                    name: 'Tanstack Router',
+                    render: <TanStackRouterDevtoolsPanel />,
+                  },
+                  TanStackQueryDevtools,
+                ]}
+              />
 
-            <Scripts />
-          </TanStackQueryProvider>
+              <Scripts />
+            </TanStackQueryProvider>
+          </AuthProvider>
+
         </ThemeProvider>
 
 
