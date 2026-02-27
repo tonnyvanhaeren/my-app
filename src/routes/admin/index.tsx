@@ -5,5 +5,12 @@ export const Route = createFileRoute('/admin/')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/admin/"!</div>
+  return (
+    <div className='mt-5'>
+      <div>
+        <h1 className='text-3xl text-orange-500'>Admin pages</h1>
+      </div>
+    </div>
+  )
+
 }

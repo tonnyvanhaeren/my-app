@@ -8,7 +8,7 @@ type NavLinkProps = {
   from?: string // optional explicit route id/path
 }
 
-export function NavLink({ to, children, from }: NavLinkProps) {
+export function NavLinkMobile({ to, children, from }: NavLinkProps) {
   const match = useMatch({
     from: from ?? to,     // route id or path pattern, eg '/posts'
     shouldThrow: false,   // don't throw if not currently rendered
@@ -20,8 +20,8 @@ export function NavLink({ to, children, from }: NavLinkProps) {
     <Link
       to={to}
       className={cn(
-        "text-sm font-medium hover:text-orange-400 hover:border-b-2 hover:border-b-orange-400",
-        isActive ? "border-b-2 border-b-orange-400" : "text-white"
+        "text-sm font-medium px-4 py-2 hover:bg-orange-400 rounded-lg",
+        isActive ? "bg-orange-400 rounded-lg" : "text-white"
       )}
     // className={isActive ? 'nav-link nav-link-active' : 'nav-link'}
     >

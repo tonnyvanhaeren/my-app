@@ -5,5 +5,11 @@ export const Route = createFileRoute('/events')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/events"!</div>
+  return (
+    <div className='mt-5'>
+      <div>
+        <h1 className='text-3xl text-orange-500'>Events</h1>
+      </div>
+    </div>
+  )
 }

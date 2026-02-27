@@ -5,5 +5,11 @@ export const Route = createFileRoute('/home')({
 })
 
 function RouteComponent() {
-  return <div className='bg-background'>Hello "/home"!</div>
+  return (
+    <div className='mt-5'>
+      <div>
+        <h1 className='text-3xl text-orange-500'>Home page</h1>
+      </div>
+    </div>
+  )
 }

@@ -1,54 +1,102 @@
+import * as React from "react"
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useAuth } from '../../../server/AuthContext'
 import { toast } from 'sonner';
 import { Button } from '../../ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '../../ui/sheet';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '../../ui/sheet';
 import { Menu } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { NavLink } from './NavLink';
+import { NavLinkMobile } from "./NavLinkMobile";
+import { LogIn, House, CircleUser, LucideSquareArrowRight } from 'lucide-react';
 
 export function MainNavbar() {
   const { auth, logout } = useAuth();
   const navigate = useNavigate();
-
 
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
       await logout();
       toast.success('U bent uitgelogd');
-      navigate({ to: '/' });
+      navigate({ to: '/home' });
     } catch (error) {
       toast.error('Er is een fout opgetreden bij het uitloggen');
     }
   };
 
   return (
-    <nav className="bg-gray-800 text-white p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        {/* Main Menu (links) - Desktop */}
-        <div className="hidden md:flex space-x-4">
-          <NavLink to={'/'} from={'/'} >Home</NavLink>
-          <NavLink to={'/courses'} from={'/courses'} >Cursussen</NavLink>
-          <Link to="/" className="hover:text-gray-300">
-            Home
-          </Link>
-          <Link to="/courses" className="hover:text-gray-300">
-            Cursussen
-          </Link>
-          <Link to="/events" className="hover:text-gray-300">
-            Evenementen
-          </Link>
-          <Link to="/teachers" className="hover:text-gray-300">
-            Docenten
-          </Link>
-          {auth.user?.role === 'admin' && (
-            <Link to="/admin" className="hover:text-gray-300">
-              Admin
-            </Link>
-          )}
+    <nav className="bg-gray-700 text-white p-4">
+      <div className="container mx-auto items-center">
+        <div className="flex justify-between">
+          <div className="flex items-center">
+            <img className="hidden md:flex" src="/ITLogoSchool_4.png" alt="head" width={100} height={20} />
+
+            {/* Main Menu (links) - Desktop */}
+            <div className="hidden md:flex space-x-4">
+              <div className='flex gap-1 items-center'>
+                <House size={15} color="green" /> <NavLink to={'/home'} from={'/home'} >Home</NavLink>
+              </div>
+
+              <NavLink to='/courses' from='/courses' >Cursussen</NavLink>
+              <NavLink to={"/events"} from={'/events'} >Events</NavLink>
+              <NavLink to={"/teachers"} from={'/teachers'} >Teachers</NavLink>
+
+              {auth.user?.role === 'admin' && (
+                <NavLink to={"/admin/"} from={'/admin/'} >Admin</NavLink>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center">
+            {/* Auth Menu (rechts) - Desktop */}
+            <div className="hidden md:flex space-x-4">
+              {!auth.isAuthenticated ? (
+                <>
+                  <div className='flex gap-1 items-center'>
+                    <LogIn size={15} color="orange" />
+                    <NavLink to="/auth/login" from='/auth/login'>
+                      Login
+                    </NavLink>
+                  </div>
+                  <div className='flex gap-1 items-center'>
+                    <LogIn size={15} color="orange" />
+                    <NavLink to="/auth/register" from='/auth/register'>
+                      Register
+                    </NavLink>
+                  </div>
+
+                </>
+              ) : (
+                <>
+                  <div className='flex gap-1 items-center'>
+                    <CircleUser size={15} color="orange" />
+                    <NavLink to="/profile" from='/profile'>
+                      Profile
+                    </NavLink>
+                  </div>
+                  <div className='flex gap-1 items-center'>
+                    <LucideSquareArrowRight size={15} color="orange" />
+                    <button
+                      onClick={handleLogout}
+                      className="text-sm font-medium hover:text-orange-400 hover:border-b-2 hover:border-b-orange-400"
+                    >
+                      Logout
+                    </button>
+
+                  </div>
+
+
+                </>
+              )}
+            </div>
+          </div>
         </div>
 
+
+      </div>
+
+
+      <div className="container mx-auto flex justify-between items-center">
         {/* Mobiel Menu (Hamburger) */}
         <div className="md:hidden">
           <Sheet>
@@ -57,67 +105,42 @@ export function MainNavbar() {
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="bg-gray-800 text-white">
-              <div className="flex flex-col space-y-4">
-                <Link to="/" className="hover:text-gray-300">
-                  Home
-                </Link>
-                <Link to="/courses" className="hover:text-gray-300">
-                  Cursussen
-                </Link>
-                <Link to="/events" className="hover:text-gray-300">
-                  Evenementen
-                </Link>
-                <Link to="/teachers" className="hover:text-gray-300">
-                  Docenten
-                </Link>
+            <SheetContent aria-description="mobile-menu" side="left" className="bg-gray-800 text-white">
+              <SheetHeader>
+                <SheetTitle className="text-2xl text-orange-400 ml-4">Menu</SheetTitle>
+                <SheetDescription className="text-sm  ml-4">
+                  Mobile menu
+                </SheetDescription>
+              </SheetHeader>
+              <div className="flex flex-col space-y-2 ml-4 mr-2">
+                <NavLinkMobile from="/home" to="/home" >Home</NavLinkMobile>
+                <NavLinkMobile from="/courses" to="/courses" >Cursussen</NavLinkMobile>
+                <NavLinkMobile from="/events" to="/events" >Evenementen</NavLinkMobile>
+                <NavLinkMobile from="/teachers" to="/teachers" >Leraren</NavLinkMobile>
                 {auth.user?.role === 'admin' && (
-                  <Link to="/admin" className="hover:text-gray-300">
-                    Admin
-                  </Link>
+                  <NavLinkMobile from="/admin/" to="/admin/" >Admins</NavLinkMobile>
                 )}
               </div>
             </SheetContent>
           </Sheet>
         </div>
 
-        {/* Auth Menu (rechts) - Desktop */}
-        <div className="hidden md:flex space-x-4 items-center">
-          {!auth.isAuthenticated ? (
-            <>
-              <Link to="/auth/login" className="hover:text-gray-300">
-                Login
-              </Link>
-              <Link to="/auth/register" className="hover:text-gray-300">
-                Registreren
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to="/profile" className="hover:text-gray-300">
-                Profiel
-              </Link>
-              <Button
-                variant="ghost"
-                onClick={handleLogout}
-                className="hover:text-gray-300 text-white"
-              >
-                Uitloggen
-              </Button>
-            </>
-          )}
-        </div>
-
         {/* Auth Menu (rechts) - Mobiel */}
         <div className="md:hidden">
           {!auth.isAuthenticated ? (
             <div className="flex space-x-2">
-              <Link to="/auth/login" className="hover:text-gray-300">
-                Login
-              </Link>
-              <Link to="/auth/register" className="hover:text-gray-300">
-                Registreren
-              </Link>
+              <div className='flex gap-1 items-center'>
+                <LogIn size={15} color="orange" />
+                <NavLink to="/auth/login" from='/auth/login'>
+                  Login
+                </NavLink>
+              </div>
+              <div className='flex gap-1 items-center'>
+                <LogIn size={15} color="orange" />
+                <NavLink to="/auth/register" from='/auth/register'>
+                  Register
+                </NavLink>
+              </div>
             </div>
           ) : (
             <DropdownMenu>
@@ -138,7 +161,7 @@ export function MainNavbar() {
                     onClick={handleLogout}
                     className="w-full justify-start hover:text-gray-300 text-white"
                   >
-                    Uitloggen
+                    logout
                   </Button>
                 </DropdownMenuItem>
               </DropdownMenuContent>

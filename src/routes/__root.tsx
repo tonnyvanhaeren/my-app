@@ -23,7 +23,6 @@ import { AuthProvider, User } from '@/server/AuthContext';
 
 
 // export interface MyRouterContext {
-//   queryClient: QueryClient
 //   auth: {
 //     isAuthenticated: boolean;
 //     user: {
@@ -80,7 +79,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className=''>
+      <body className='bg-gray-300'>
         <ThemeProvider>
           <AuthProvider initialUser={user}>
             <TanStackQueryProvider>
@@ -103,10 +102,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               <Scripts />
             </TanStackQueryProvider>
           </AuthProvider>
-
         </ThemeProvider>
-
-
       </body>
     </html>
   )
